@@ -16,6 +16,10 @@ site:
       attributes:
         name: apple-mobile-web-app-capable
         content: 'yes'
+    - tagName: meta
+      attributes:
+        name: mobile-web-app-capable
+        content: 'yes'
   navbar:
     title: Solar Forecast
     logo:
