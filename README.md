@@ -4,6 +4,8 @@ Solar forecast dashboard (GHI, sunshine duration, UV index, temperature),
 built with [Dinghy](https://dinghy.dev) as a Docusaurus site and published to
 GitHub Pages at [solar-forecast.dinghy.dev](https://solar-forecast.dinghy.dev).
 
+**Thanks to [Open-Meteo.com](https://open-meteo.com) for the high quality weather data (CC-BY 4.0).**
+
 ## File/Folder Structure
 
 1. `dinghy.config.yml` - Dinghy site configuration
