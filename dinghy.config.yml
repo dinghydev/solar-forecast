@@ -2,6 +2,20 @@ site:
   url: https://solar-forecast.dinghy.dev
   baseUrl: /
   title: Solar Forecast
+  favicon: assets/favicon.svg
+  headTags:
+    - tagName: link
+      attributes:
+        rel: apple-touch-icon
+        href: /assets/apple-touch-icon.png
+    - tagName: meta
+      attributes:
+        name: apple-mobile-web-app-title
+        content: Solar Forecast
+    - tagName: meta
+      attributes:
+        name: apple-mobile-web-app-capable
+        content: 'yes'
   navbar:
     title: Solar Forecast
     logo:
