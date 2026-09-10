@@ -1,0 +1,11 @@
+---
+title: Solar Forecast
+hide_title: true
+---
+
+import SolarForecast from '../components/SolarForecast'
+import BrowserOnly from '@docusaurus/BrowserOnly'
+
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {() => <SolarForecast />}
+</BrowserOnly>

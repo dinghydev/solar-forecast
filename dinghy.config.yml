@@ -1,0 +1,18 @@
+site:
+  url: https://solar-forecast.dinghy.dev
+  baseUrl: /
+  title: Solar Forecast
+  navbar:
+    title: Solar Forecast
+    logo:
+      src: /assets/favicon.svg
+      href: https://solar-forecast.dinghy.dev/
+      target: _self
+    items:
+      - type: custom-locationControl
+        position: right
+      - href: https://github.com/dinghydev/solar-forecast
+        position: right
+        className: header-github-link
+        aria-label: GitHub repository
+  footer: false

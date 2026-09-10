@@ -1,0 +1,33 @@
+name: Deploy Solar Forecast to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # required for requesting the JWT
+  contents: read # required for actions/checkout
+  pages: write # to deploy to Pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dinghydev/setup-dinghy@v1
+        with:
+          prepare-images: site
+      - run: dinghy site build
+      - uses: actions/upload-pages-artifact@v3
+        id: deployment
+        with:
+          path: output/site/
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
