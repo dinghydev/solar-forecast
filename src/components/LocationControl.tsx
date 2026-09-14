@@ -13,7 +13,6 @@ export default function LocationControl() {
     () => new URLSearchParams(typeof location !== 'undefined' ? location.search : ''),
     [],
   )
-  const pathname = typeof location !== 'undefined' ? location.pathname : '/'
   const latitude = qs.get('lat') || config.defaultLatitude
   const longitude = qs.get('lon') || config.defaultLongitude
 
@@ -32,7 +31,7 @@ export default function LocationControl() {
     const trimmed = coordInput.trim()
     if (!trimmed) {
       if (qs.has('lat') || qs.has('lon')) {
-        location.href = withQuery(pathname, (q) => {
+        location.href = withQuery('/', (q) => {
           q.delete('lat')
           q.delete('lon')
         })
@@ -44,7 +43,7 @@ export default function LocationControl() {
     }
     const [newLat, newLon] = trimmed.split(',').map((s) => s.trim())
     if (newLat && newLon && (newLat !== latitude || newLon !== longitude)) {
-      location.href = withQuery(pathname, (q) => {
+      location.href = withQuery('/', (q) => {
         q.set('lat', newLat)
         q.set('lon', newLon)
       })
@@ -65,7 +64,7 @@ export default function LocationControl() {
         setLocating(false)
         const newLat = pos.coords.latitude.toFixed(4)
         const newLon = pos.coords.longitude.toFixed(4)
-        location.href = withQuery(pathname, (q) => {
+        location.href = withQuery('/', (q) => {
           q.set('lat', newLat)
           q.set('lon', newLon)
         })
@@ -96,6 +95,7 @@ export default function LocationControl() {
         }
         value={coordInput}
         onChange={(e) => setCoordInput(e.target.value)}
+        onBlur={handleSubmit}
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleSubmit()
         }}
