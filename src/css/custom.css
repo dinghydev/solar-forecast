@@ -24,6 +24,21 @@
   background-color: var(--ifm-navbar-link-hover-color);
 }
 
+.header-github-link {
+  font-size: 0;
+}
+
+.navbar__inner .header-github-link svg {
+  display: none;
+}
+
+.navbar-sidebar .header-github-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1rem;
+}
+
 .header-bar {
   display: flex;
   justify-content: space-between;
@@ -112,6 +127,12 @@
 .navbar-coord-group .icon-btn svg {
   width: 13px;
   height: 13px;
+}
+
+@media (max-width: 996px) {
+  .navbar__inner .navbar__title {
+    display: none;
+  }
 }
 
 .coord-label {

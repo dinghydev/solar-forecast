@@ -16,12 +16,15 @@ const verticalBarLabel = {
         if (v == null) return
         const text = (+v).toFixed(1)
         if (text === '0.0' || text === '-0.0') return
+        const isDark =
+          typeof document !== 'undefined' &&
+          document.documentElement.getAttribute('data-theme') === 'dark'
         ctx.save()
         ctx.translate(bar.x, bar.y - 4)
         ctx.rotate(-Math.PI / 2)
         ctx.textAlign = 'left'
         ctx.textBaseline = 'middle'
-        ctx.fillStyle = '#333'
+        ctx.fillStyle = isDark ? '#e0e0e0' : '#333'
         ctx.font = '10px -apple-system, "Segoe UI", sans-serif'
         ctx.fillText(text, 0, 0)
         ctx.restore()
@@ -436,7 +439,6 @@ export default function SolarForecast() {
       sunUvChartConfig,
       tempChartConfig,
       tableRows,
-      hoursToShow,
     }
   }, [json, unitFactor, unitLabel, forecastHours, currentTz])
 
@@ -474,14 +476,14 @@ export default function SolarForecast() {
         <div>
           <details className="collapsible" open>
             <summary>
-              <h2>Hourly GHI — {view.hoursToShow} h from yesterday</h2>
+              <h2>Hourly Global Horizontal Irradiation (GHI)</h2>
             </summary>
             <ChartCanvas config={view.hourlyGhiChartConfig} />
           </details>
 
           <details className="collapsible" open>
             <summary>
-              <h2>Daily Global Horizontal Irradiation (GHI)</h2>
+              <h2>Daily GHI</h2>
             </summary>
             <ChartCanvas config={view.ghiChartConfig} />
           </details>
