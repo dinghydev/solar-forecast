@@ -8,15 +8,19 @@ GitHub Pages at [solar-forecast.dinghy.dev](https://solar-forecast.dinghy.dev).
 
 ## File/Folder Structure
 
-1. `dinghy.config.yml` - Dinghy site configuration
-1. `src` - Main source directory for the site
-   1. `components` - React components
-   1. `api` - Handles data fetching from Open-Meteo
-   1. `utils` - Formatting and Chart.js loading helpers
-   1. `css/custom.css` - Custom CSS applied to every Docusaurus page
-1. `static` - Folder for static assets, copied directly to the published site
-   (includes the `CNAME` file for the custom domain)
-1. `output/site` - Build output; all files to be deployed with GitHub Pages are here
+1. configuration
+   1. `.dinghyrc` - Pins the Dinghy engine version
+   1. `dinghy.config.yml` - Dinghy site configuration
+   1. `.github/workflows/deploy.yml` - GitHub Actions based continuous deployment
+1. source code
+   1. `src` - Main source directory for the site
+      1. `pages` - Site pages (home page and User Guide)
+      1. `components` - React components
+      1. `api` - Handles data fetching from Open-Meteo
+      1. `utils` - Formatting and Chart.js loading helpers
+      1. `css/custom.css` - Custom CSS applied to every Docusaurus page
+   1. `static` - Folder for static assets, copied directly to the published site
+      (includes the `CNAME` file for the custom domain)
 
 ## Local Preview
 
