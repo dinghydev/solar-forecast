@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { config } from '../api/config'
 
 function withQuery(pathname: string, mutate: (qs: URLSearchParams) => void): string {
@@ -20,11 +20,16 @@ export default function LocationControl() {
   const [locating, setLocating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const coordMapHref = useMemo(() => {
+  // Starts as '#' on both server and initial client render, then updates in an
+  // effect so hydration never bakes in a stale (server-default) map link.
+  const [coordMapHref, setCoordMapHref] = useState('#')
+  useEffect(() => {
     const [lat, lon] = coordInput.split(',').map((s) => s.trim())
-    return lat && lon
-      ? `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lon)}`
-      : '#'
+    setCoordMapHref(
+      lat && lon
+        ? `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lon)}`
+        : '#',
+    )
   }, [coordInput])
 
   const handleSubmit = () => {
