@@ -11,11 +11,21 @@ const verticalBarLabel = {
     chart.data.datasets.forEach((ds: any, di: number) => {
       const meta = chart.getDatasetMeta(di)
       if (meta.type !== 'bar') return
-      meta.data.forEach((bar: any, i: number) => {
+      // Rotated labels need ~12px each. When bars are narrower, draw the
+      // largest values first and skip any label that would overlap one
+      // already drawn, so peaks keep their labels.
+      const order = meta.data
+        .map((_: any, i: number) => i)
+        .sort((a: number, b: number) => (+ds.data[b] || 0) - (+ds.data[a] || 0))
+      const drawnX: number[] = []
+      order.forEach((i: number) => {
+        const bar = meta.data[i]
         const v = ds.data[i]
         if (v == null) return
         const text = (+v).toFixed(1)
         if (text === '0.0' || text === '-0.0') return
+        if (drawnX.some((x) => Math.abs(x - bar.x) < 12)) return
+        drawnX.push(bar.x)
         const isDark =
           typeof document !== 'undefined' &&
           document.documentElement.getAttribute('data-theme') === 'dark'
@@ -320,7 +330,26 @@ export default function SolarForecast() {
           legend: { display: false },
         },
         scales: {
-          x: { ticks: { autoSkip: false, maxRotation: 90, minRotation: 90 } },
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 90,
+              // On narrow screens show only day starts and every Nth hour,
+              // keeping at least ~20px per visible label.
+              callback: function (this: any, _value: any, index: number) {
+                const label = hLabels[index]
+                const pxPerBar = (this.width || this.chart.width) / hLabels.length
+                const step = [1, 2, 3, 4, 6].find((s) => pxPerBar * s >= 20) ?? 6
+                if (step === 1 || label.includes(' ')) return label
+                // Keep hour labels clear of nearby day-start labels on both sides.
+                for (let j = Math.max(0, index - step + 1); j < Math.min(hLabels.length, index + step); j++) {
+                  if (hLabels[j].includes(' ')) return ''
+                }
+                return parseInt(label, 10) % step === 0 ? label : ''
+              },
+            },
+          },
           y: {
             title: { display: true, text: withUnit('GHI', unitLabel) },
             min: Math.min(...hGhiMJ),
